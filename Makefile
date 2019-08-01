@@ -1,4 +1,4 @@
-TARGETS := $(shell ls scripts | grep -vE 'build-dev|clean|dev|help|release')
+TARGETS := $(shell ls scripts | grep -vE 'build-dev|clean|dev|help|release|tag')
 
 TMUX := $(shell command -v tmux 2> /dev/null)
 
@@ -11,7 +11,7 @@ TMUX := $(shell command -v tmux 2> /dev/null)
 
 .github-release:
 	@echo Downloading github-release
-	@curl -sL https://github.com/aktau/github-release/releases/download/v0.6.2/linux-amd64-github-release.tar.bz2 | tar xjO > .github-release.tmp
+	@curl -sL https://github.com/aktau/github-release/releases/download/v0.7.2/linux-amd64-github-release.tar.bz2 | tar xjO > .github-release.tmp
 	@@chmod +x .github-release.tmp
 	@./.github-release.tmp -v
 	@mv .github-release.tmp .github-release
@@ -46,6 +46,9 @@ help:
 release: .github-release
 	./scripts/release
 
+tag:
+	./scripts/tag
+
 .DEFAULT_GOAL := ci
 
-.PHONY: .dapper .github-release .tmass $(TARGETS) build-dev clean dev help release
+.PHONY: .dapper .github-release .tmass $(TARGETS) build-dev clean dev help release tag
